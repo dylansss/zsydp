@@ -7,7 +7,7 @@ function resolve(url) {
 }
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/sayhello-site/",
+  base: "/",
   assetsInclude: ["**/*.glb", "**/*.gltf", "**/*.fbx", "**/*.hdr", "**/*.json", "**/*.mp4", "**/*.mov"],
   resolve: {
     alias: {
