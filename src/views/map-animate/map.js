@@ -79,7 +79,7 @@ export class World extends Mini3d {
     this.toastLoading = new ToastLoading()
     this.history = new createHistory()
     this.history.push({ name: "中国" })
-    this.returnBtn = document.querySelector(".return-btn")
+    // this.returnBtn = document.querySelector(".return-btn")
     this.clicked = false // 是否已经点击
     this.currentScene = "mainScene" // 当前场景 mainScene | childScene
     this.assets = new Assets(() => {
@@ -545,7 +545,6 @@ export class World extends Mini3d {
     })
 
     setTimeout(() => {
-      console.log('跳转四川');
       
       const userData = {
         "index": 22,
@@ -656,7 +655,7 @@ export class World extends Mini3d {
   loadChildMap(userData) {
     this.toastLoading.show()
     this.getChildMapData(userData, (data) => {
-      this.returnBtn.style.display = "block"
+      // this.returnBtn.style.display = "block"
       this.childMap && this.childMap.destroy()
       this.childMap = new ChildMap(this, {
         adcode: userData.adcode,
@@ -678,9 +677,12 @@ export class World extends Mini3d {
   }
 
   getChildMapData(userData, callback) {
-    console.log(userData, 'getChildMapData-userData');
     // console.log(sichuanjson, 'sichuanjson');
     // return sichuanjson
+
+    // let url = `https://geo.datav.aliyun.com/areas_v3/bound/${userData.adcode}_full.json`
+
+   
     let url = base_url + "assets/json/sichuan.json"
 
     if (userData.childrenNum === 0) {
@@ -710,7 +712,7 @@ export class World extends Mini3d {
     if (!this.history.getIndex()) {
       this.currentScene = "mainScene"
 
-      this.returnBtn.style.display = "none"
+      // this.returnBtn.style.display = "none"
 
       this.childMap && this.childMap.destroy()
       this.childMap = null
@@ -719,7 +721,8 @@ export class World extends Mini3d {
       this.setLabelVisible("labelGroup", true)
     } else {
       let userData = this.history.present
-
+      console.log(111);
+      
       this.loadChildMap(userData)
     }
 

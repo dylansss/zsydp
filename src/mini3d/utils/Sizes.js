@@ -12,9 +12,10 @@ export class Sizes extends EventEmitter {
     })
   }
   init() {
-    const width = window.innerWidth - 600
+    const width = window.innerWidth - 800
+    const height = window.innerHeight - 400
     this.width = width
-    this.height = 800
+    this.height = height
     this.pixelRatio = this.pixelRatio || Math.min(window.devicePixelRatio, 2)
   }
   destroy() {

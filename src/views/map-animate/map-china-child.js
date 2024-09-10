@@ -4,7 +4,7 @@ import { getBoundBox, emptyObject } from "@/mini3d"
 import { geoMercator } from "d3-geo"
 import { gsap } from "gsap"
 import router from '@/router';
-
+import youkulist from './youkudata'
 export class ChildMap {
   constructor(parent, options) {
     this.parent = parent
@@ -149,25 +149,25 @@ export class ChildMap {
     this.eventElement.map((mesh) => {
       this.parent.interactionManager.add(mesh)
       mesh.addEventListener("mousedown", (event) => {
-        
-        
+
+        console.log('mousedown', event.target);
+
         if (this.clicked) return false
         this.clicked = true
         let userData = event.target.parent.userData
-        this.parent.history.push(userData)
-        this.parent.loadChildMap(userData)
+        // this.parent.history.push(userData)
+        // this.parent.loadChildMap(userData)
       })
       mesh.addEventListener("mouseup", (ev) => {
         this.clicked = false
       })
       mesh.addEventListener("mouseover", (event) => {
-        // console.log(event, 'addEvent-mouseover-event');
-        if (!objectsHover.includes(event.target.parent)) {
-          objectsHover.push(event.target.parent)
-        }
+        // if (!objectsHover.includes(event.target.parent)) {
+        //   objectsHover.push(event.target.parent)
+        // }
 
-        document.body.style.cursor = "pointer"
-        move(event.target.parent)
+        // document.body.style.cursor = "pointer"
+        // move(event.target.parent)
       })
       mesh.addEventListener("mouseout", (event) => {
         objectsHover = objectsHover.filter((n) => n.userData.name !== event.target.parent.userData.name)
@@ -186,12 +186,11 @@ export class ChildMap {
     this.pointEventElement.map((mesh) => {
       this.parent.interactionManager.add(mesh)
       mesh.addEventListener("mousedown", (event) => {
-        console.log(event, 'addPointEvent-event');
+        console.log('point-mousedwon', event.target);
         
         if (this.clicked) return false
         this.clicked = true
         let userData = event.target.userData
-        console.log(userData, 'userData');
         router.push({ name: 'Detail', params: { id: userData.adcode } });
 
         this.allInfoLabel.map((label, index) => {
@@ -240,7 +239,7 @@ export class ChildMap {
   }
   // 设置标签移动
   setLabelMove(adcode, type = "up") {
-    ;[...this.allAreaLabel].map((label) => {
+    [...this.allAreaLabel].map((label) => {
       if (label.userData.adcode === adcode) {
         gsap.to(label.position, {
           duration: 0.3,
@@ -275,22 +274,8 @@ export class ChildMap {
     this.pointHoverMaterial.color = new Color(0x00ffff)
     const sprite = new Sprite(material)
     sprite.renderOrder = 23
-    console.log(this.areaData, 'this.areaData');
-    const selfAreaData = [...this.areaData, {
-      "name": "1号点位",
-      "center": [
-          104.065735,
-          30.659462
-      ],
-      "centroid": [
-          104.0157,
-          30.5452
-      ],
-      "adcode": 510100,
-      "enName": "",
-      "value": 10
-  }]
-  selfAreaData.map((item, index) => {
+    const selfAreaData = youkulist
+    selfAreaData.map((item, index) => {
       let [x, y] = this.geoProjection(item.centroid)
       // 名称
       let nameLabel = this.labelNameStyle(item, index, new Vector3(x, -y, 0))
@@ -329,7 +314,7 @@ export class ChildMap {
         </div>
         <div class="info-point-content">
           <div class="content-item"><span class="label">名称</span><span class="value">${data.name}</span></div>
-          <div class="content-item"><span class="label">PM2.5</span><span class="value">${data.value}</span></div>
+          <div class="content-item"><span class="label">储油量</span><span class="value">${data.value}万吨</span></div>
           <div class="content-item"><span class="label">等级</span><span class="value">良好</span></div>
         </div>
       </div>
@@ -436,9 +421,9 @@ export class ChildMap {
     })
     this.removeElement(".area-name-label")
     this.removeElement(".info-point")
-    ;[...this.eventElement, ...this.pointEventElement].map((mesh) => {
-      this.parent.interactionManager.remove(mesh)
-    })
+      ;[...this.eventElement, ...this.pointEventElement].map((mesh) => {
+        this.parent.interactionManager.remove(mesh)
+      })
 
     emptyObject(this.instance)
   }

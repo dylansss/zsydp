@@ -6,15 +6,32 @@
     <div class="main-container">
 
       <div class="left-container fl">
-        <div class="chart left-1" data-adcode="100"></div>
-        <div class="chart left-2"></div>
-        <div class="chart left-3"></div>
+        <div class="chart left-1">
+          <div class="title title-2">收油作业负荷时间比</div>
+          <!-- <GLFYPC /> -->
+          <div class="content left-1-content"></div>
+        </div>
+        <div class="chart left-2">
+          <div class="title title-2">公路发油频次
+          </div>
+          <div class="content left-2-content">
+            <GLFYPC />
+          </div>
+
+        </div>
+        <div class="chart left-3">
+          <div class="title title-2">损耗管理（油库损耗）</div>
+          <div class="content left-3-content"></div>
+        </div>
       </div>
       <div class="center-container fl">
-        <div class="chart center-1"></div>
+        <div class="chart center-1">
+          <div class="title title-2">油库排行榜</div>
+          <Yklist />
+        </div>
         <div class="map-level">
           <canvas id="canvas"></canvas>
-          <div class="return-btn" @click="goBack">返回上一级</div>
+          <!-- <div class="return-btn" @click="goBack">返回上一级</div> -->
           <!-- <div class="map-btn-group">
           <div class="btn" :class="{ active: state.bar }" @click="setEffectToggle('bar')">柱状图</div>
           <div class="btn" :class="{ active: state.flyLine }" @click="setEffectToggle('flyLine')">飞线</div>
@@ -26,23 +43,41 @@
         </div> -->
         </div>
         <div class="bottom-container fl">
+          <div class="title title-2">一次物流调度监控</div>
+          <div class="content bottom-container-content">
 
+          </div>
         </div>
       </div>
       <div class="right-container fl">
-        <div class="chart right-1"></div>
-        <div class="chart right-2"></div>
-        <div class="chart right-3"></div>
+        <div class="chart right-1">
+          <div class="title title-2">油库实时</div>
+          <div class="content right-1-content"></div>
+        </div>
+        <div class="chart right-2">
+          <div class="title title-2">物流视频监控</div>
+          <div class="content right-2-content">
+            <Wuliuvideo />
+          </div>
+        </div>
+        <div class="chart right-3">
+          <div class="title title-2">加油站运行监控</div>
+          <div class="content right-3-content"></div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref, onBeforeUnmount, reactive } from "vue"
+import { onMounted, ref, onBeforeUnmount, reactive, watch } from "vue"
+import GLFYPC from '../components/GLFYPC.vue'
+import Wuliuvideo from '../components/Wuliuvideo.vue'
+import Yklist from '../components/Yklist.vue'
 import { World } from "./map"
+import { useRoute } from "vue-router";
 let app = null
-
+const route = useRoute()
 const state = reactive({
   bar: true, // 柱状图
   flyLine: false, // 飞线
@@ -97,40 +132,19 @@ const setEnable = (bool) => {
 const goBack = () => {
   app && app.goBack()
 }
+const key = ref(0)
 onMounted(() => {
+  console.log(route.meta, 'meta');
+  
+  if (route.meta.shouldReload) {
+    window.location.reload(); // 强制刷新页面
+  }
   app = new World(document.getElementById("canvas"), {
     geoProjectionCenter: [103.36, 30.65],
     setEnable: setEnable,
   })
-  // setTimeout(() => {
-  //   console.log('注册监听');
-  //   document.querySelector('.left-1').addEventListener('mouseenter', e => {
-  //     console.log('.left-1-mouseenter');
-  //   })
-  //   document.querySelector('.left-1').addEventListener('mouseleave', e => {
-  //     console.log('left-1-mouseleave');
-  //   })
-  //   document.querySelectorAll('.provinces-name-label-wrap').forEach(ele => {
-  //     ele.addEventListener("mouseenter", (e) => {
-  //       if (e.currentTarget === e.target) {
-
-  //         console.log(e.target, '111111111111111111-mouseenter');
-  //         const points = e.target.parentElement.parentElement.nextElementSibling
-  //         points.querySelector('.provinces-name-point-label').style.display = 'block'
-  //       }
-  //     });
-  //     ele.addEventListener("mouseleave", (e) => {
-  //       if (e.currentTarget === e.target) {
-
-  //         console.log(e.target, '2222222222222-mouseleave');
-  //         const points = e.target.parentElement.parentElement.nextElementSibling
-  //         points.querySelector('.provinces-name-point-label').style.display = 'none'
-  //       }
-  //     });
-  //   })
-
-  // }, 2000);
 })
+
 onBeforeUnmount(() => {
   app && app.destroy()
 })
@@ -156,56 +170,80 @@ onBeforeUnmount(() => {
     display: flex;
     width: 100%;
     height: calc(100% - 60px);
+    justify-content: space-between;
 
     .fl {
       display: flex;
     }
 
     .left-container {
+
+
       .left-1 {
-        background: url(../../../public/img/left-1.png);
+        .left-1-content {
+          background: url(../../../public/img/left-1.png);
+        }
       }
 
       .left-2 {
-        background: url(../../../public/img/left-2.png);
+        // background: url(../../../public/img/left-2.png);
       }
 
       .left-3 {
-        background: url(../../../public/img/left-3.png);
+        .left-3-content {
+
+          background: url(../../../public/img/left-3.png);
+        }
       }
     }
 
     .right-container {
       .right-1 {
-        background: url(../../../public/img/right-1.png);
+        .right-1-content {
+          background: url(../../../public/img/right-1.png);
+        }
       }
 
       .right-2 {
-        background: url(../../../public/img/right-2.png);
+        .right-2-content {
+          background: url(../../../public/img/right-2.png);
+        }
       }
 
       .right-3 {
-        background: url(../../../public/img/right-3.png);
+        .right-3-content {
+          background: url(../../../public/img/right-3.png);
+        }
       }
     }
 
     .left-container,
     .right-container {
-      width: 300px;
+      width: 400px;
+      min-width: 400px;
       height: 100%;
       display: flex;
       flex-flow: column;
+      justify-content: space-between;
 
       .chart {
         width: 100%;
-        flex: 1;
+        height: 30%;
         background-size: 100% 100%;
+
+        .content {
+          width: 100%;
+          height: calc(100% - 40px);
+          background-size: 100% 100%;
+        }
       }
+
+
 
     }
 
     .center-container {
-      flex: 1;
+      // flex: 1;
       position: relative;
       display: flex;
       flex-flow: column;
@@ -216,8 +254,6 @@ onBeforeUnmount(() => {
         left: 10px;
         width: 300px;
         height: 500px;
-        background: url(../../../public/img/center-1.png);
-        background-size: 100% 100%;
         z-index: 5;
       }
 
@@ -235,9 +271,27 @@ onBeforeUnmount(() => {
       .bottom-container {
         width: 100%;
         height: 400px;
-        background: url(../../../public/img/bottom-1.png);
-        background-size: 100% 100%;
+        display: flex;
+        flex-flow: column;
+
+        .content {
+          width: 100%;
+          height: calc(100% - 40px);
+
+        }
+
+        .bottom-container-content {
+          background: url(../../../public/img/bottom-1.png);
+          background-size: 100% 100%;
+        }
       }
+
+    }
+
+    .title-2 {
+      font-size: 18px;
+      text-align: left;
+      height: 40px;
     }
 
   }
