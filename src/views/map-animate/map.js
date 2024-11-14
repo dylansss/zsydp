@@ -139,7 +139,7 @@ export class World extends Mini3d {
           delay: 2,
           x: 3.134497983573052,
           y: 126.8312346165316,
-          z: 28.77649752477839,
+          z: 17.77649752477839,
           ease: "circ.out",
           onComplete: () => {
             this.camera.controls.saveState()

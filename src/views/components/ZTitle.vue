@@ -16,13 +16,14 @@ const props = defineProps(['content', 'rtitle'])
     line-height: 28px;
     background: url(../../assets/images/title.png);
     background-size: 100% 100%;
-    font-size: 16px;
+    font-size: 20px;
     text-indent: 1em;
     font-weight: 600;
     color: #fff;
     font-style: italic;
     margin-bottom: 10px;
-    .fr{
+
+    .fr {
         float: right;
         font-weight: 500;
         font-style: normal;

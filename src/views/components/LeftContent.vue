@@ -1,7 +1,6 @@
 <template>
     <div class="left-container fl">
         <div class="chart left-1">
-            <!-- <div class="title title-2">收油作业负荷时间比</div> -->
             <ZTitle content="收油作业负荷时间比" />
             <div class="content left-1-content">
                 <SYZYFHSJB />
@@ -18,14 +17,17 @@
             <ZTitle content="损耗管理（油库损耗）" rtitle="单位：吨" />
             <div class="content left-3-content">
                 <div class="top">
-                    这里有三个数据块
+                    <div class="data-container" v-for="(data, index) in dataList" :class="`data-container-${index}`">
+                        <span class="name">{{ data.name }}</span>
+                        <span class="num">{{ data.num }}</span>
+                    </div>
                 </div>
                 <SHGL />
             </div>
         </div>
         <div class="chart left-4">
             <ZTitle content="油库报警TOP5" />
-            <div class="content left-3-content">
+            <div class="content left-4-content">
                 <YKBJTOP5 />
             </div>
         </div>
@@ -38,6 +40,22 @@ import GLFYPC from './GLFYPC.vue'
 import SYZYFHSJB from './SYZYFHSJB.vue'
 import SHGL from './SHGL.vue'
 import YKBJTOP5 from './YKBJTOP5.vue'
+import { reactive } from 'vue'
+
+const dataList = reactive([
+    {
+        name: '昨日',
+        num: "21"
+    },
+    {
+        name: '月累计',
+        num: "3320"
+    },
+    {
+        name: '综合累计',
+        num: "1.5%"
+    },
+])
 </script>
 
 <style scoped lang="scss">
@@ -55,6 +73,65 @@ import YKBJTOP5 from './YKBJTOP5.vue'
 
     .left-3 {
         .left-3-content {
+            .top {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                height: 44px;
+
+                .data-container {
+                    width: 127px;
+                    height: 44px;
+                    background-size: 100% 100%;
+                    color: #fff;
+                    display: flex;
+                    align-items: flex-end;
+
+                    .name {
+                        font-size: 12px;
+                        flex: 1;
+                        margin-bottom: 4px;
+                        margin-left: 5px;
+                    }
+
+                    .num {
+                        font-size: 21px;
+                        font-weight: bold;
+                        font-size: 24px;
+                        margin-right: 5px;
+                    }
+                }
+
+                .data-container-0 {
+                    background: url(../../assets/images/data-1-bg.png);
+
+                    .num {
+                        background: linear-gradient(0deg, #FCDAA4 0%, #FFFFFF 100%);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                    }
+                }
+
+                .data-container-1 {
+                    background: url(../../assets/images/data-2-bg.png);
+
+                    .num {
+                        background: linear-gradient(0deg, #48A1D2 0%, #FFFFFF 100%);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                    }
+                }
+
+                .data-container-2 {
+                    background: url(../../assets/images/data-3-bg.png);
+
+                    .num {
+                        background: linear-gradient(0deg, #00E8CA 0%, #FFFFFF 100%);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                    }
+                }
+            }
 
             // background: url(../../../public/img/left-3.png);
         }

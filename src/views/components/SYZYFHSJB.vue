@@ -25,6 +25,7 @@ const options = {
       formatter: (value) => value.split("").join("\n"), // 让每个字分行显示
       textStyle: {
         color: '#fff', // 文字颜色
+        fontSize: 14
       }
     },
 

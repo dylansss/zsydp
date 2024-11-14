@@ -57,8 +57,8 @@ onBeforeUnmount(() => {
   .title {
     font-size: 40px;
     width: 100%;
-    height: 60px;
-    line-height: 60px;
+    height: 75px;
+    line-height: 75px;
     text-align: center;
     color: #fff;
   }
@@ -66,10 +66,11 @@ onBeforeUnmount(() => {
   .main-container {
     display: flex;
     width: 100%;
-    height: calc(100% - 60px);
+    height: calc(100% - 75px);
     justify-content: space-between;
-    padding: 0 40px 20px;
+    padding: 0 30px 17px;
     box-sizing: border-box;
+    margin-top: 10px;
 
 
     .fl {
@@ -111,7 +112,7 @@ onBeforeUnmount(() => {
 
     .left-container,
     .right-container {
-      width: 457px;
+      width: 450px;
       height: 100%;
       display: flex;
       flex-flow: column;
@@ -197,6 +198,7 @@ onBeforeUnmount(() => {
   padding: 16px 12px 0;
   margin-bottom: 30px;
   font-size: 20px;
+
   &-wrap {
 
     &:after,
@@ -268,7 +270,7 @@ onBeforeUnmount(() => {
       margin-bottom: 5px;
 
       .label {
-        width: 60px;
+        width: 100px;
         padding-left: 10px;
       }
 
@@ -339,8 +341,12 @@ onBeforeUnmount(() => {
 }
 
 .area-name-label {
+  font-size: 20px;
+  font-family: YouSheBiaoTiHei;
+  font-weight: 400;
+  color: #F0F0F0;
+
   &-wrap {
-    color: #5fc6dc;
     opacity: 1;
     text-shadow: 1px 1px 0px #000;
   }
