@@ -67,10 +67,11 @@ export class World extends Mini3d {
     this.flyLineCenter = [116.41995, 40.18994]
     this.depth = 5
     this.scene.fog = new Fog(0x011024, 1, 500)
-    this.scene.background = new Color(0x011024)
+    // this.scene.background = rgba(0,0,0,0)
+    this.renderer.instance.setClearColor(0x000000,0);
     this.camera.instance.position.set(0.00002366776247217723, 225.1025284992283, 0.0002238648924037432)
     this.camera.instance.near = 1
-    this.camera.instance.far = 10000
+    this.camera.instance.far = 1000
     this.camera.instance.updateProjectionMatrix()
     // 交互管理器
     this.interactionManager = new InteractionManager(this.renderer.instance, this.camera.instance, this.canvas)
@@ -110,19 +111,19 @@ export class World extends Mini3d {
 
 
       // 创建柱状图
-      this.createBar()
-      // 创建粒子
-      this.createParticles()
-      // 创建飞线
-      this.createFlyLine()
-      // 创建散点图
-      this.createScatter()
-      // 创建标牌
-      this.createBadgeLabel()
+      // this.createBar()
+      // // 创建粒子
+      // this.createParticles()
+      // // 创建飞线
+      // this.createFlyLine()
+      // // 创建散点图
+      // this.createScatter()
+      // // 创建标牌
+      // this.createBadgeLabel()
       // 创建路径动画
-      this.createPathAnimate()
+      // this.createPathAnimate()
       // 创建描边动画
-      this.createStorke()
+      // this.createStorke()
       // if (import.meta.env.MODE === "staging") {
       //   this.createWatermark()
       // }
@@ -138,7 +139,7 @@ export class World extends Mini3d {
           delay: 2,
           x: 3.134497983573052,
           y: 126.8312346165316,
-          z: 78.77649752477839,
+          z: 28.77649752477839,
           ease: "circ.out",
           onComplete: () => {
             this.camera.controls.saveState()
@@ -240,110 +241,110 @@ export class World extends Mini3d {
         }),
         "focusMapOpacity"
       )
-      this.allBar.map((item, index) => {
-        tl.add(
-          gsap.to(item.scale, {
-            duration: 1,
-            delay: 0.05 * index,
-            x: 1,
-            y: 1,
-            z: 1,
-            ease: "circ.out",
-          }),
-          "bar"
-        )
-      })
-      this.allBarMaterial.map((item, index) => {
-        tl.add(
-          gsap.to(item, {
-            duration: 0.5,
-            delay: 0.05 * index,
-            opacity: 1,
-            ease: "circ.out",
-          }),
-          "bar"
-        )
-      })
-      this.allProvinceLabel.map((item, index) => {
-        let element = item.element.querySelector(".provinces-label-style02-wrap")
-        let number = item.element.querySelector(".number .value")
-        let numberVal = Number(number.innerText)
-        let numberAnimate = {
-          score: 0,
-        }
-        tl.add(
-          gsap.to(element, {
-            duration: 0.5,
-            delay: 0.05 * index,
-            translateY: 0,
-            opacity: 1,
-            ease: "circ.out",
-          }),
-          "bar"
-        )
-        let text = gsap.to(numberAnimate, {
-          duration: 0.5,
-          delay: 0.05 * index,
-          score: numberVal,
-          onUpdate: showScore,
-        })
-        function showScore() {
-          number.innerText = numberAnimate.score.toFixed(0)
-        }
-        tl.add(text, "bar")
-      })
-      this.allProvinceNameLabel.map((item, index) => {
-        let element = item.element.querySelector(".provinces-name-label-wrap")
+      // this.allBar.map((item, index) => {
+      //   tl.add(
+      //     gsap.to(item.scale, {
+      //       duration: 1,
+      //       delay: 0.05 * index,
+      //       x: 1,
+      //       y: 1,
+      //       z: 1,
+      //       ease: "circ.out",
+      //     }),
+      //     "bar"
+      //   )
+      // })
+      // this.allBarMaterial.map((item, index) => {
+      //   tl.add(
+      //     gsap.to(item, {
+      //       duration: 0.5,
+      //       delay: 0.05 * index,
+      //       opacity: 1,
+      //       ease: "circ.out",
+      //     }),
+      //     "bar"
+      //   )
+      // })
+      // this.allProvinceLabel.map((item, index) => {
+      //   let element = item.element.querySelector(".provinces-label-style02-wrap")
+      //   let number = item.element.querySelector(".number .value")
+      //   let numberVal = Number(number.innerText)
+      //   let numberAnimate = {
+      //     score: 0,
+      //   }
+      //   tl.add(
+      //     gsap.to(element, {
+      //       duration: 0.5,
+      //       delay: 0.05 * index,
+      //       translateY: 0,
+      //       opacity: 1,
+      //       ease: "circ.out",
+      //     }),
+      //     "bar"
+      //   )
+      //   let text = gsap.to(numberAnimate, {
+      //     duration: 0.5,
+      //     delay: 0.05 * index,
+      //     score: numberVal,
+      //     onUpdate: showScore,
+      //   })
+      //   function showScore() {
+      //     number.innerText = numberAnimate.score.toFixed(0)
+      //   }
+      //   tl.add(text, "bar")
+      // })
+      // this.allProvinceNameLabel.map((item, index) => {
+      //   let element = item.element.querySelector(".provinces-name-label-wrap")
 
-        tl.add(
-          gsap.to(element, {
-            duration: 0.5,
-            delay: 0.05 * index,
-            translateY: 0,
-            opacity: 1,
-            ease: "circ.out",
-          }),
-          "bar"
-        )
-      })
-      this.allProvincePonitNameLabel.map((item, index) => {
-        let element = item.element.querySelector(".provinces-name-point-label-wrap")
+      //   tl.add(
+      //     gsap.to(element, {
+      //       duration: 0.5,
+      //       delay: 0.05 * index,
+      //       translateY: 0,
+      //       opacity: 1,
+      //       ease: "circ.out",
+      //     }),
+      //     "bar"
+      //   )
+      // })
+      // this.allProvincePonitNameLabel.map((item, index) => {
+      //   let element = item.element.querySelector(".provinces-name-point-label-wrap")
 
-        tl.add(
-          gsap.to(element, {
-            duration: 0.5,
-            delay: 0.05 * index,
-            translateY: -100,
-            opacity: 1,
-            ease: "circ.out",
-          }),
-          "bar"
-        )
-      })
-      this.allGuangquan.map((item, index) => {
-        tl.add(
-          gsap.to(item.children[0].scale, {
-            duration: 0.5,
-            delay: 0.05 * index,
-            x: 1,
-            y: 1,
-            z: 1,
-            ease: "circ.out",
-          }),
-          "bar"
-        )
-        tl.add(
-          gsap.to(item.children[1].scale, {
-            duration: 0.5,
-            delay: 0.05 * index,
-            x: 1,
-            y: 1,
-            z: 1,
-            ease: "circ.out",
-          }),
-          "bar"
-        )
-      })
+      //   tl.add(
+      //     gsap.to(element, {
+      //       duration: 0.5,
+      //       delay: 0.05 * index,
+      //       translateY: -100,
+      //       opacity: 1,
+      //       ease: "circ.out",
+      //     }),
+      //     "bar"
+      //   )
+      // })
+      // this.allGuangquan.map((item, index) => {
+      //   tl.add(
+      //     gsap.to(item.children[0].scale, {
+      //       duration: 0.5,
+      //       delay: 0.05 * index,
+      //       x: 1,
+      //       y: 1,
+      //       z: 1,
+      //       ease: "circ.out",
+      //     }),
+      //     "bar"
+      //   )
+      //   tl.add(
+      //     gsap.to(item.children[1].scale, {
+      //       duration: 0.5,
+      //       delay: 0.05 * index,
+      //       x: 1,
+      //       y: 1,
+      //       z: 1,
+      //       ease: "circ.out",
+      //     }),
+      //     "bar"
+      //   )
+      // })
     })
   }
   // 初始化环境灯光
@@ -434,6 +435,7 @@ export class World extends Mini3d {
       renderOrder: 9,
     })
     this.time.on("tick", () => {
+      
       sideMaterial.map.offset.y += 0.002
     })
     let faceMaterial = new MeshStandardMaterial({
@@ -564,7 +566,7 @@ export class World extends Mini3d {
       this.history.push(userData)
   
       this.loadChildMap(userData)
-    }, 3000);
+    }, 2000);
 
   }
 
@@ -672,7 +674,7 @@ export class World extends Mini3d {
 
       this.camera.controls.reset()
       this.currentScene = "childScene"
-      this.config.setEnable(false)
+      this.config?.setEnable(false)
     })
   }
 
@@ -1037,6 +1039,7 @@ export class World extends Mini3d {
     this.quanGroup.add(mesh1, mesh2)
 
     this.time.on("tick", (delta) => {
+      console.log(this.camera.instance.position)
       mesh1.rotation.z += delta * 2
     })
     return this.quanGroup
@@ -1069,6 +1072,7 @@ export class World extends Mini3d {
     let mesh = new Mesh(geometry, material)
     mesh.rotateX(-Math.PI / 2)
     mesh.position.set(0, 0.05, 0)
+    mesh.visible=false
     this.scene.add(mesh)
 
     const quanTexture = this.assets.instance.getResource("quan")
@@ -1104,6 +1108,7 @@ export class World extends Mini3d {
       alphaMap: alphaMap,
       blending: AdditiveBlending,
     })
+    material.visible=false
 
     let mesh = new Mesh(geometry, material)
     mesh.rotateX(-Math.PI / 2)
@@ -1112,6 +1117,8 @@ export class World extends Mini3d {
     const mesh2 = mesh.clone()
     mesh2.material = material.clone()
     mesh2.material.opacity = 0.1
+    mesh.visible=false
+    mesh2.visible=false
     this.scene.add(mesh, mesh2)
     new DiffuseShader({
       material,
@@ -1180,6 +1187,9 @@ export class World extends Mini3d {
     })
     plane02.instance.renderOrder = 6
     plane02.instance.scale.set(0, 0, 0)
+    plane01.instance.visible=false
+    plane02.instance.visible=false
+    this.quan.visible=false
     plane02.setParent(this.scene)
     this.rotateBorder1 = plane01.instance
     this.rotateBorder2 = plane02.instance
@@ -1386,7 +1396,7 @@ export class World extends Mini3d {
         color: 0xffffff,
         transparent: true,
         fog: false,
-        opacity: 1,
+        opacity: 0,
         depthTest: false,
         blending: AdditiveBlending,
       }),

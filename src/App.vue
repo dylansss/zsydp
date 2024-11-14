@@ -7,11 +7,10 @@
 
 <style lang="scss" scoped>
 .container {
-
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: url(../public/img/bg.png) no-repeat;
+  background: url(./assets/images/page-bg.png) no-repeat;
   background-size: 100% 100%;
 }
 </style>

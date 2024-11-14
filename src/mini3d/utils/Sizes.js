@@ -12,7 +12,7 @@ export class Sizes extends EventEmitter {
     })
   }
   init() {
-    const width = window.innerWidth - 800
+    const width = window.innerWidth - 954
     const height = window.innerHeight - 400
     this.width = width
     this.height = height

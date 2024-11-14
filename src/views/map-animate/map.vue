@@ -4,144 +4,41 @@
       四川销售油库监控平台
     </div>
     <div class="main-container">
-
-      <div class="left-container fl">
-        <div class="chart left-1">
-          <div class="title title-2">收油作业负荷时间比</div>
-          <!-- <GLFYPC /> -->
-          <div class="content left-1-content"></div>
-        </div>
-        <div class="chart left-2">
-          <div class="title title-2">公路发油频次
-          </div>
-          <div class="content left-2-content">
-            <GLFYPC />
-          </div>
-
-        </div>
-        <div class="chart left-3">
-          <div class="title title-2">损耗管理（油库损耗）</div>
-          <div class="content left-3-content"></div>
-        </div>
-      </div>
+      <LeftContent></LeftContent>
       <div class="center-container fl">
-        <div class="chart center-1">
-          <div class="title title-2">油库排行榜</div>
-          <Yklist />
-        </div>
         <div class="map-level">
           <canvas id="canvas"></canvas>
-          <!-- <div class="return-btn" @click="goBack">返回上一级</div> -->
-          <!-- <div class="map-btn-group">
-          <div class="btn" :class="{ active: state.bar }" @click="setEffectToggle('bar')">柱状图</div>
-          <div class="btn" :class="{ active: state.flyLine }" @click="setEffectToggle('flyLine')">飞线</div>
-          <div class="btn" :class="{ active: state.scatter }" @click="setEffectToggle('scatter')">散点图</div>
-          <div class="btn" :class="{ active: state.card }" @click="setEffectToggle('card')">标牌</div>
-          <div class="btn" :class="{ active: state.particle }" @click="setEffectToggle('particle')">粒子特效</div>
-          <div class="btn" :class="{ active: state.path }" @click="setEffectToggle('path')">路径轨迹</div>
-          <div class="btn" :class="{ active: state.mirror }" @click="setEffectToggle('mirror')">倒影</div>
-        </div> -->
+
         </div>
         <div class="bottom-container fl">
-          <div class="title title-2">一次物流调度监控</div>
-          <div class="content bottom-container-content">
-
-          </div>
+          <ZTitle content="一次物流调度监控" rtitle="单位：万吨" />
+          <BottomContent></BottomContent>
         </div>
       </div>
-      <div class="right-container fl">
-        <div class="chart right-1">
-          <div class="title title-2">油库实时</div>
-          <div class="content right-1-content"></div>
-        </div>
-        <div class="chart right-2">
-          <div class="title title-2">物流视频监控</div>
-          <div class="content right-2-content">
-            <Wuliuvideo />
-          </div>
-        </div>
-        <div class="chart right-3">
-          <div class="title title-2">加油站运行监控</div>
-          <div class="content right-3-content"></div>
-        </div>
-      </div>
+      <RightContent></RightContent>
     </div>
   </div>
 </template>
 
 <script setup>
 import { onMounted, ref, onBeforeUnmount, reactive, watch } from "vue"
-import GLFYPC from '../components/GLFYPC.vue'
-import Wuliuvideo from '../components/Wuliuvideo.vue'
-import Yklist from '../components/Yklist.vue'
+import ZTitle from '../components/ZTitle.vue'
+import LeftContent from '../components/LeftContent.vue'
+import RightContent from '../components/RightContent.vue'
+import BottomContent from '../components/BottomContent.vue'
 import { World } from "./map"
 import { useRoute } from "vue-router";
 let app = null
 const route = useRoute()
-const state = reactive({
-  bar: true, // 柱状图
-  flyLine: false, // 飞线
-  scatter: false, // 散点图
-  card: false, // 标牌
-  particle: false, // 粒子
-  mirror: false, // 倒影
-  path: false, // 路径轨迹
-})
-const setEffectToggle = (type) => {
-  console.log(app.currentScene)
-  if (["bar", "flyLine", "scatter", "card", "path"].includes(type) && app && app.currentScene === "childScene") {
-    return false
-  }
-  // 设置按钮状态
-  state[type] = !state[type]
 
-  if (type === "bar") {
-    app.barGroup.visible = state[type]
-    app.setLabelVisible("labelGroup", state[type])
-  }
-  if (type === "particle") {
-    app.particles.enable = state[type]
-    app.particles.instance.visible = state[type]
-  }
-  if (type === "flyLine") {
-    app.flyLineGroup.visible = state[type]
-    app.flyLineFocusGroup.visible = state[type]
-  }
-  if (type === "scatter") {
-    app.scatterGroup.visible = state[type]
-  }
-  if (type === "card") {
-    app.setLabelVisible("badgeGroup", state[type])
-  }
-  if (type === "mirror") {
-    app.groundMirror.visible = state[type]
-  }
-  if (type === "path") {
-    app.pathLineGroup.visible = state[type]
-  }
-}
-// 设置按钮启用和禁用
-const setEnable = (bool) => {
-  state.bar = bool
-  state.flyLine = bool
-  state.scatter = bool
-  state.card = bool
-  state.path = bool
-}
-// 返回上一级
-const goBack = () => {
-  app && app.goBack()
-}
-const key = ref(0)
 onMounted(() => {
   console.log(route.meta, 'meta');
-  
+
   if (route.meta.shouldReload) {
     window.location.reload(); // 强制刷新页面
   }
   app = new World(document.getElementById("canvas"), {
     geoProjectionCenter: [103.36, 30.65],
-    setEnable: setEnable,
   })
 })
 
@@ -171,91 +68,21 @@ onBeforeUnmount(() => {
     width: 100%;
     height: calc(100% - 60px);
     justify-content: space-between;
+    padding: 0 40px 20px;
+    box-sizing: border-box;
+
 
     .fl {
       display: flex;
     }
 
-    .left-container {
-
-
-      .left-1 {
-        .left-1-content {
-          background: url(../../../public/img/left-1.png);
-        }
-      }
-
-      .left-2 {
-        // background: url(../../../public/img/left-2.png);
-      }
-
-      .left-3 {
-        .left-3-content {
-
-          background: url(../../../public/img/left-3.png);
-        }
-      }
-    }
-
-    .right-container {
-      .right-1 {
-        .right-1-content {
-          background: url(../../../public/img/right-1.png);
-        }
-      }
-
-      .right-2 {
-        .right-2-content {
-          background: url(../../../public/img/right-2.png);
-        }
-      }
-
-      .right-3 {
-        .right-3-content {
-          background: url(../../../public/img/right-3.png);
-        }
-      }
-    }
-
-    .left-container,
-    .right-container {
-      width: 400px;
-      min-width: 400px;
-      height: 100%;
-      display: flex;
-      flex-flow: column;
-      justify-content: space-between;
-
-      .chart {
-        width: 100%;
-        height: 30%;
-        background-size: 100% 100%;
-
-        .content {
-          width: 100%;
-          height: calc(100% - 40px);
-          background-size: 100% 100%;
-        }
-      }
-
-
-
-    }
-
     .center-container {
-      // flex: 1;
+      flex: 1;
       position: relative;
       display: flex;
       flex-flow: column;
+      align-items: center;
 
-      .center-1 {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        width: 300px;
-        height: 500px;
-        z-index: 5;
-      }
 
       .map-level {
         width: 100%;
@@ -264,34 +91,49 @@ onBeforeUnmount(() => {
         #canvas {
           width: 100%;
           height: 100%;
-          background: #000;
+          // background: #000;
         }
       }
 
       .bottom-container {
-        width: 100%;
-        height: 400px;
+        display: none;
+        width: 90%;
+        height: 304px;
         display: flex;
         flex-flow: column;
+        background: url(../../assets/images/bottom-bg.png);
+        background-size: 100% 100%;
 
-        .content {
-          width: 100%;
-          height: calc(100% - 40px);
-
-        }
-
-        .bottom-container-content {
-          background: url(../../../public/img/bottom-1.png);
-          background-size: 100% 100%;
-        }
       }
 
     }
 
-    .title-2 {
-      font-size: 18px;
-      text-align: left;
-      height: 40px;
+
+    .left-container,
+    .right-container {
+      width: 457px;
+      height: 100%;
+      display: flex;
+      flex-flow: column;
+      justify-content: space-between;
+      background: url(../../assets/images/side-bg.png);
+      background-size: 100% 100%;
+      padding: 20px;
+      box-sizing: border-box;
+      gap: 20px;
+
+      .chart {
+        width: 100%;
+        // height: 30%;
+        flex: 1;
+        background-size: 100% 100%;
+
+        .content {
+          width: 100%;
+          height: calc(100% - 40px);
+          background-size: 100% 100%;
+        }
+      }
     }
 
   }
@@ -350,11 +192,11 @@ onBeforeUnmount(() => {
   background: rgba(0, 0, 0, 0.5);
   color: #a3dcde;
   font-size: 14px;
-  width: 170px;
-  height: 106px;
+  width: 270px;
+  height: 156px;
   padding: 16px 12px 0;
   margin-bottom: 30px;
-
+  font-size: 20px;
   &-wrap {
 
     &:after,
@@ -420,8 +262,8 @@ onBeforeUnmount(() => {
   &-content {
     .content-item {
       display: flex;
-      height: 28px;
-      line-height: 28px;
+      height: 45px;
+      line-height: 45px;
       background: rgba(35, 47, 58, 0.6);
       margin-bottom: 5px;
 
